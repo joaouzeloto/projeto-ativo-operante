@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Ativo e Operante</title>
+  <meta name="description" content="Sarsa - News & Magazine HTML Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.png">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/animate.min.css">
+  <link rel="stylesheet" href="../css/magnific-popup.css">
+  <link rel="stylesheet" href="../css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="../css/imageRevealHover.css">
+  <link rel="stylesheet" href="../css/swiper-bundle.css">
+  <link rel="stylesheet" href="../css/flaticon.css">
+  <link rel="stylesheet" href="../css/slick.css">
+  <link rel="stylesheet" href="../css/spacing.css">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+
+  <button class="scroll__top scroll-to-target" data-target="html">
+    <i class="fas fa-angle-up"></i>
+  </button>
+
+  <header class="header__style-two">
+    <div class="header__top">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-xl-3 col-lg-4 d-none d-lg-block">
+            <div class="d-flex gap-4 align-items-center">
+              <div class="offcanvas-toggle">
+                <a href="#"><i class="flaticon-menu-bar"></i></a>
+              </div>
+              <div class="header__top-logo logo">
+                <a href="index.html" class="logo-dark">
+                  <img src="../img/logoAlerta.png" alt="Logo">
+                </a>
+                <a href="index.html" class="logo-light">
+                  <img src="../img/logoAlerta.png" alt="Logo">
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-9 col-lg-8">
+            <nav class="tgmenu__nav">
+              <div class="logo d-block d-lg-none">
+                <a href="index.html" class="logo-dark"><img src="../img/logoAlerta.png" alt="Logo"></a>
+                <a href="index.html" class="logo-light"><img src="../img/logoAlerta.png" alt="Logo"></a>
+              </div>
+              <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
+                <ul class="navigation">
+                  <li class="active menu-item-has-children"><a href="#">Home</a>
+                    <ul class="sub-menu">
+                      <li><a href="index.html">Home Default</a></li>
+                      <li class="active"><a href="index-2.html">Home Interior</a></li>
+                      <li><a href="index-3.html">Home Travel</a></li>
+                      <li><a href="index-4.html">Home Technology</a></li>
+                      <li><a href="index-5.html">Home NFT</a></li>
+                      <li><a href="index-6.html">Home Fashion</a></li>
+                      <li><a href="index-7.html">Home Adventure</a></li>
+                      <li><a href="index-8.html">Home Minimal</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="lifestyle.html">Lifestyle</a></li>
+                  <li><a href="travel.html">Travel</a></li>
+                  <li class="menu-item-has-children"><a href="#">Post Type</a>
+                    <ul class="sub-menu">
+                      <li><a href="blog.html">Our Blog</a></li>
+                      <li><a href="blog-details.html">Blog Details</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="nft.html">NFT</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="header-fixed-height"></div>
+
+
+    <div class="offCanvas__wrap">
+      <div class="offCanvas__body">
+        <div class="offCanvas__toggle"><i class="flaticon-addition"></i></div>
+        <div class="offCanvas__content">
+          <div class="offCanvas__logo logo">
+            <a href="index.html" class="logo-dark"><img src="IMG/logoAlerta.png" alt="Logo"></a>
+            <a href="index.html" class="logo-light"><img src="IMG/logoAlerta.png" alt="Logo"></a>
+          </div>
+          <p>Change how the world works with Biotellus, made for ecology.</p>
+          <ul class="offCanvas__instagram list-wrap">
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="offCanvas__overlay"></div>
+  </header>
+  <main>
+    <!-- Seção: Dashboard do Administrador -->
+    <section class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="my-4">Dashboard do Administrador</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center mb-4">
+        <div class="col-md-8 text-center">
+          <div class="btn-group" role="group">
+            <button id="btnOrgaosCompetentes" class="btn btn-primary mx-2">Gestão de Órgãos Competentes</button>
+            <button id="btnTiposProblemas" class="btn btn-secondary mx-2">Gestão de Tipos de Problemas</button>
+            <button id="btnListarDenuncias" class="btn btn-success mx-2">Listar Denúncias</button>
+          </div>
+        </div>
+      </div>
+      <div id="content" class="row justify-content-center">
+        <!-- O conteúdo dinâmico será carregado aqui -->
+      </div>
+    </section>
+
+    <!-- Modelo para a Gestão de Órgãos Competentes -->
+    <template id="templateOrgaosCompetentes">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Gestão de Órgãos Competentes</h5>
+            <!-- Formulário de CRUD para órgãos competentes seria aqui -->
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Modelo para a Gestão de Tipos de Problemas -->
+    <template id="templateTiposProblemas">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Gestão de Tipos de Problemas</h5>
+            <!-- Formulário de CRUD para tipos de problemas seria aqui -->
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Modelo para a Listagem de Denúncias -->
+    <template id="templateListarDenuncias">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Listagem de Denúncias</h5>
+            <ul id="listaDenuncias" class="list-group">
+              <!-- A lista de denúncias será carregada aqui -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </template>
+
+  </main>
+
+  <br><br><br><br>
+
+  <footer class="footer-area black-bg">
+    <div class="container">
+      <div class="footer__logo-wrap">
+        <div class="row align-items-center">
+          <div class="col-lg-3 col-md-4">
+            <div class="footer__logo logo">
+              <a href="index.html"><img src="assets/img/" alt="Logo"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer__copyright">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="copyright__text">
+              <p>Copyright & Design By <span>@Theme_Genix</span> - 2022</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="copyright__menu">
+              <ul class="list-wrap">
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Advertise</a></li>
+                <li><a href="#">Store</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/isotope.pkgd.min.js"></script>
+  <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="assets/js/jquery.marquee.min.js"></script>
+  <script src="assets/js/imageRevealHover.js"></script>
+  <script src="assets/js/swiper-bundle.js"></script>
+  <script src="assets/js/TweenMax.min.js"></script>
+  <script src="assets/js/slick.min.js"></script>
+  <script src="assets/js/ajax-form.js"></script>
+  <script src="assets/js/wow.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="../JAVASCRIPT/script.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btnOrgaosCompetentes = document.getElementById('btnOrgaosCompetentes');
+      const btnTiposProblemas = document.getElementById('btnTiposProblemas');
+      const btnListarDenuncias = document.getElementById('btnListarDenuncias');
+      const content = document.getElementById('content');
+
+      // Elementos dos modelos
+      const templateOrgaosCompetentes = document.getElementById('templateOrgaosCompetentes').content;
+      const templateTiposProblemas = document.getElementById('templateTiposProblemas').content;
+      const templateListarDenuncias = document.getElementById('templateListarDenuncias').content;
+
+      // Dados de exemplo para as denúncias
+      let denuncias = [
+        { titulo: 'Denúncia 1', descricao: 'Descrição da denúncia 1' },
+        { titulo: 'Denúncia 2', descricao: 'Descrição da denúncia 2' }
+      ];
+
+      function showOrgaosCompetentes() {
+        content.innerHTML = ''; // Limpa o conteúdo
+        content.appendChild(document.importNode(templateOrgaosCompetentes, true));
+
+        // Aqui você implementaria o CRUD para órgãos competentes
+      }
+
+      function showTiposProblemas() {
+        content.innerHTML = ''; // Limpa o conteúdo
+        content.appendChild(document.importNode(templateTiposProblemas, true));
+
+        // Aqui você implementaria o CRUD para tipos de problemas
+      }
+
+      function showListarDenuncias() {
+        content.innerHTML = ''; // Limpa o conteúdo
+        content.appendChild(document.importNode(templateListarDenuncias, true));
+
+        const listaDenuncias = document.getElementById('listaDenuncias');
+        listaDenuncias.innerHTML = ''; // Limpa a lista anterior
+
+        // Preenche a lista com as denúncias
+        denuncias.forEach((denuncia, index) => {
+          const li = document.createElement('li');
+          li.className = 'list-group-item d-flex justify-content-between align-items-center';
+          li.innerHTML = `<strong>${denuncia.titulo}</strong><br>${denuncia.descricao}`;
+
+          // Botão para apagar denúncia
+          const btnApagar = document.createElement('button');
+          btnApagar.className = 'btn-sm';
+          btnApagar.textContent = 'Apagar';
+          btnApagar.style.color = "black";
+          btnApagar.style.marginRight = "5px";
+          btnApagar.addEventListener('click', () => apagarDenuncia(index));
+
+          // Botão para criar feedback
+          const btnFeedback = document.createElement('button');
+          btnFeedback.className = 'btn-sm ml-10';
+          btnFeedback.textContent = 'Feedback';
+          btnFeedback.style.color = "black";
+          btnFeedback.addEventListener('click', () => criarFeedback(index));
+
+          // Adiciona os botões à direita da denúncia
+          const divBotoes = document.createElement('div');
+          divBotoes.appendChild(btnApagar);
+          divBotoes.appendChild(btnFeedback);
+
+          li.appendChild(divBotoes);
+
+          listaDenuncias.appendChild(li);
+        });
+      }
+
+
+      function apagarDenuncia(index) {
+        // Aqui você implementaria a lógica para apagar a denúncia com o índice fornecido
+        // Exemplo: denuncias.splice(index, 1);
+        // Em seguida, você poderia recarregar a lista de denúncias
+        showListarDenuncias();
+      }
+
+      function criarFeedback(index) {
+        // Aqui você implementaria a lógica para criar um feedback para a denúncia com o índice fornecido
+        // Exemplo: const idDenuncia = denuncias[index].id;
+        // Em seguida, você abriria um modal ou formulário para inserir o feedback e enviá-lo via API
+        alert('Criar feedback para denúncia com índice ' + index);
+      }
+
+      // Listeners de eventos para os botões
+      btnOrgaosCompetentes.addEventListener('click', showOrgaosCompetentes);
+      btnTiposProblemas.addEventListener('click', showTiposProblemas);
+      btnListarDenuncias.addEventListener('click', showListarDenuncias);
+
+      // Exibe o conteúdo inicial
+      showListarDenuncias(); // Por exemplo, exibir a listagem de denúncias por padrão
+
+    });
+  </script>
+
+</body>
+
+</html>
