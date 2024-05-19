@@ -23,25 +23,41 @@
 </head>
 
 <body>
+  <!-- Modal -->
+  <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="feedbackModalLabel">Inserir Feedback</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <textarea id="feedbackInput" class="form-control" placeholder="Digite seu feedback aqui..."
+            rows="3"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" id="btnSalvarFeedback" class="btn btn-primary">Salvar Feedback</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <button class="scroll__top scroll-to-target" data-target="html">
     <i class="fas fa-angle-up"></i>
   </button>
 
   <header class="header__style-two">
-    <div class="header__top">
+    <div class="header__top" style="margin: 0px !important; padding-bottom: 10px; padding-top: 30px;">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-xl-3 col-lg-4 d-none d-lg-block">
             <div class="d-flex gap-4 align-items-center">
-              <div class="offcanvas-toggle">
-                <a href="#"><i class="flaticon-menu-bar"></i></a>
-              </div>
               <div class="header__top-logo logo">
-                <a href="index.html" class="logo-dark">
+                <a href="../../index.html" class="logo-dark">
                   <img src="../img/logoAlerta.png" alt="Logo">
                 </a>
-                <a href="index.html" class="logo-light">
+                <a href="../../index.html" class="logo-light">
                   <img src="../img/logoAlerta.png" alt="Logo">
                 </a>
               </div>
@@ -50,33 +66,20 @@
           <div class="col-xl-9 col-lg-8">
             <nav class="tgmenu__nav">
               <div class="logo d-block d-lg-none">
-                <a href="index.html" class="logo-dark"><img src="../img/logoAlerta.png" alt="Logo"></a>
-                <a href="index.html" class="logo-light"><img src="../img/logoAlerta.png" alt="Logo"></a>
+                <a href="../../index.html" class="logo-dark"><img src="../img/logoAlerta.png" alt="Logo"></a>
+                <a href="../../index.html" class="logo-light"><img src="../img/logoAlerta.png" alt="Logo"></a>
+
               </div>
               <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
                 <ul class="navigation">
-                  <li class="active menu-item-has-children"><a href="#">Home</a>
-                    <ul class="sub-menu">
-                      <li><a href="index.html">Home Default</a></li>
-                      <li class="active"><a href="index-2.html">Home Interior</a></li>
-                      <li><a href="index-3.html">Home Travel</a></li>
-                      <li><a href="index-4.html">Home Technology</a></li>
-                      <li><a href="index-5.html">Home NFT</a></li>
-                      <li><a href="index-6.html">Home Fashion</a></li>
-                      <li><a href="index-7.html">Home Adventure</a></li>
-                      <li><a href="index-8.html">Home Minimal</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="lifestyle.html">Lifestyle</a></li>
-                  <li><a href="travel.html">Travel</a></li>
-                  <li class="menu-item-has-children"><a href="#">Post Type</a>
-                    <ul class="sub-menu">
-                      <li><a href="blog.html">Our Blog</a></li>
-                      <li><a href="blog-details.html">Blog Details</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="nft.html">NFT</a></li>
+                  <li><a>Seja a diferença!</a></li>
                 </ul>
+
+                <!-- Left links -->
+                <div class="d-flex align-items-center">
+                  <button data-mdb-ripple-init type="button" class="btn px-3 me-2"
+                    onclick="window.location.href='../../index.html'">Sair</button>
+                </div>
               </div>
             </nav>
           </div>
@@ -84,24 +87,8 @@
       </div>
     </div>
     <div id="header-fixed-height"></div>
-
-
-    <div class="offCanvas__wrap">
-      <div class="offCanvas__body">
-        <div class="offCanvas__toggle"><i class="flaticon-addition"></i></div>
-        <div class="offCanvas__content">
-          <div class="offCanvas__logo logo">
-            <a href="index.html" class="logo-dark"><img src="IMG/logoAlerta.png" alt="Logo"></a>
-            <a href="index.html" class="logo-light"><img src="IMG/logoAlerta.png" alt="Logo"></a>
-          </div>
-          <p>Change how the world works with Biotellus, made for ecology.</p>
-          <ul class="offCanvas__instagram list-wrap">
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="offCanvas__overlay"></div>
   </header>
+
   <main>
     <!-- Seção: Dashboard do Administrador -->
     <section class="container my-5">
@@ -169,8 +156,6 @@
       </div>
     </template>
 
-
-
     <!-- Modelo para a Listagem de Denúncias -->
     <template id="templateListarDenuncias">
       <div class="col-lg-8">
@@ -183,6 +168,7 @@
           </div>
         </div>
       </div>
+
     </template>
 
   </main>
@@ -195,7 +181,7 @@
         <div class="row align-items-center">
           <div class="col-lg-3 col-md-4">
             <div class="footer__logo logo">
-              <a href="index.html"><img src="assets/img/" alt="Logo"></a>
+              <a href="../../index.html"><img src="../img/logoAlerta.png" alt="Logo"></a>
             </div>
           </div>
         </div>
@@ -204,24 +190,13 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="copyright__text">
-              <p>Copyright & Design By <span>@Theme_Genix</span> - 2022</p>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="copyright__menu">
-              <ul class="list-wrap">
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Terms of Use</a></li>
-                <li><a href="#">Advertise</a></li>
-                <li><a href="#">Store</a></li>
-              </ul>
+              <p>Copyright & Design By <span> Diego Godoy - João Uzeloto</span> - 2024</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </footer>
-
   <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/js/isotope.pkgd.min.js"></script>
@@ -236,7 +211,7 @@
   <script src="assets/js/wow.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="../JAVASCRIPT/script.js"></script>
-  
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const btnOrgaosCompetentes = document.getElementById('btnOrgaosCompetentes');
@@ -345,10 +320,44 @@
       }
 
       function criarFeedback(index) {
-        // Aqui você implementaria a lógica para criar um feedback para a denúncia com o índice fornecido
-        // Exemplo: const idDenuncia = denuncias[index].id;
-        // Em seguida, você abriria um modal ou formulário para inserir o feedback e enviá-lo via API
-        alert('Criar feedback para denúncia com índice ' + index);
+        // Seleciona a denúncia correspondente
+        const denuncia = denuncias[index];
+
+        // Verifica se já existe um campo de texto para o feedback
+        const feedbackInputExistente = document.querySelector(`#listaDenuncias li:nth-child(${index + 1}) .form-control-feedback`);
+        if (feedbackInputExistente) {
+          // Se já existe, não faz nada
+          return;
+        }
+
+        // Cria um campo de texto para o feedback
+        const feedbackInput = document.createElement('textarea');
+        feedbackInput.className = 'form-control mt-2 form-control-feedback';
+        feedbackInput.placeholder = 'Digite seu feedback aqui...';
+        feedbackInput.rows = 3;
+
+        // Cria um botão para salvar o feedback
+        const btnSalvarFeedback = document.createElement('button');
+        btnSalvarFeedback.className = 'btn mt-2';
+        btnSalvarFeedback.textContent = 'Salvar Feedback';
+        btnSalvarFeedback.addEventListener('click', () => {
+          const feedback = feedbackInput.value;
+          if (feedback) {
+            alert('Feedback salvo: ' + feedback);
+            // Aqui você pode implementar a lógica para salvar o feedback no backend
+
+            // Remove o campo de texto e o botão de salvar após salvar o feedback
+            feedbackInput.remove();
+            btnSalvarFeedback.remove();
+          } else {
+            alert('Por favor, insira um feedback.');
+          }
+        });
+
+        // Adiciona o campo de texto e o botão à denúncia
+        const denunciaLi = document.querySelector(`#listaDenuncias li:nth-child(${index + 1})`);
+        denunciaLi.appendChild(feedbackInput);
+        denunciaLi.appendChild(btnSalvarFeedback);
       }
 
       // Listeners de eventos para os botões
@@ -376,7 +385,7 @@
       preencherListaOrgaos(orgaos);
       preencherListaTiposProblemas(tiposProblemas);
     });
-</script>
+  </script>
 
 
 </body>
