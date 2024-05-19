@@ -113,9 +113,9 @@
       <div class="row justify-content-center mb-4">
         <div class="col-md-8 text-center">
           <div class="btn-group" role="group">
-            <button id="btnOrgaosCompetentes" class="btn btn-primary mx-2">Gestão de Órgãos Competentes</button>
-            <button id="btnTiposProblemas" class="btn btn-secondary mx-2">Gestão de Tipos de Problemas</button>
-            <button id="btnListarDenuncias" class="btn btn-success mx-2">Listar Denúncias</button>
+            <button id="btnOrgaosCompetentes" class="btn mx-2">Gestão de Órgãos Competentes</button>
+            <button id="btnTiposProblemas" class="btn mx-2">Gestão de Tipos de Problemas</button>
+            <button id="btnListarDenuncias" class="btn mx-2">Listar Denúncias</button>
           </div>
         </div>
       </div>
@@ -130,11 +130,22 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Gestão de Órgãos Competentes</h5>
-            <!-- Formulário de CRUD para órgãos competentes seria aqui -->
+            <form id="formOrgaos">
+              <div class="mb-3">
+                <label for="inputOrgao" class="form-label">Nome do Órgão</label>
+                <input type="text" class="form-control" id="inputOrgao" placeholder="Digite o nome do órgão" required>
+              </div>
+              <button type="submit" class="btn">Cadastrar</button>
+            </form>
+            <div id="listaOrgaos" class="mt-4">
+              <!-- A lista de órgãos competentes será carregada aqui -->
+            </div>
           </div>
         </div>
       </div>
     </template>
+
+
 
     <!-- Modelo para a Gestão de Tipos de Problemas -->
     <template id="templateTiposProblemas">
@@ -142,11 +153,23 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Gestão de Tipos de Problemas</h5>
-            <!-- Formulário de CRUD para tipos de problemas seria aqui -->
+            <form id="formTiposProblemas">
+              <div class="mb-3">
+                <label for="inputTipoProblema" class="form-label">Tipo de Problema</label>
+                <input type="text" class="form-control" id="inputTipoProblema" placeholder="Digite o tipo de problema"
+                  required>
+              </div>
+              <button type="submit" class="btn">Cadastrar</button>
+            </form>
+            <div id="listaTiposProblemas" class="mt-4">
+              <!-- A lista de tipos de problemas será carregada aqui -->
+            </div>
           </div>
         </div>
       </div>
     </template>
+
+
 
     <!-- Modelo para a Listagem de Denúncias -->
     <template id="templateListarDenuncias">
@@ -213,7 +236,7 @@
   <script src="assets/js/wow.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="../JAVASCRIPT/script.js"></script>
-
+  
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const btnOrgaosCompetentes = document.getElementById('btnOrgaosCompetentes');
@@ -232,11 +255,38 @@
         { titulo: 'Denúncia 2', descricao: 'Descrição da denúncia 2' }
       ];
 
+      // Função para preencher a lista de órgãos responsáveis
+      function preencherListaOrgaos(orgaos) {
+        const listaOrgaos = document.getElementById('listaOrgaos');
+        listaOrgaos.innerHTML = ''; // Limpa a lista anterior
+
+        orgaos.forEach(orgao => {
+          const li = document.createElement('li');
+          li.textContent = orgao.nome;
+
+          listaOrgaos.appendChild(li);
+        });
+      }
+
+      // Função para preencher a lista de tipos de problemas
+      function preencherListaTiposProblemas(tiposProblemas) {
+        const listaTiposProblemas = document.getElementById('listaTiposProblemas');
+        listaTiposProblemas.innerHTML = ''; // Limpa a lista anterior
+
+        tiposProblemas.forEach(tipo => {
+          const li = document.createElement('li');
+          li.textContent = tipo.nome;
+
+          listaTiposProblemas.appendChild(li);
+        });
+      }
+
       function showOrgaosCompetentes() {
         content.innerHTML = ''; // Limpa o conteúdo
         content.appendChild(document.importNode(templateOrgaosCompetentes, true));
 
         // Aqui você implementaria o CRUD para órgãos competentes
+        preencherListaOrgaos(orgaos); // Chamada da função para preencher a lista de órgãos competentes
       }
 
       function showTiposProblemas() {
@@ -244,6 +294,7 @@
         content.appendChild(document.importNode(templateTiposProblemas, true));
 
         // Aqui você implementaria o CRUD para tipos de problemas
+        preencherListaTiposProblemas(tiposProblemas); // Chamada da função para preencher a lista de tipos de problemas
       }
 
       function showListarDenuncias() {
@@ -308,8 +359,25 @@
       // Exibe o conteúdo inicial
       showListarDenuncias(); // Por exemplo, exibir a listagem de denúncias por padrão
 
+      // Dados de exemplo para as listas de órgãos responsáveis e tipos de problemas
+      const orgaos = [
+        { nome: 'Órgão 1' },
+        { nome: 'Órgão 2' },
+        { nome: 'Órgão 3' }
+      ];
+
+      const tiposProblemas = [
+        { nome: 'Tipo 1' },
+        { nome: 'Tipo 2' },
+        { nome: 'Tipo 3' }
+      ];
+
+      // Preenche as listas com os dados
+      preencherListaOrgaos(orgaos);
+      preencherListaTiposProblemas(tiposProblemas);
     });
-  </script>
+</script>
+
 
 </body>
 
