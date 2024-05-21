@@ -97,36 +97,23 @@
               <div class="card">
                 <div class="card-body py-5 px-md-5">
 
-                  <form>
-
-                    <h4 style="font-size: 40px !important; margin: 0 auto;" class="">
-                      Realize o seu <span class="text-primary">Cadastro</span>
-                    </h4>
-                    <br>
-                    <div class="row">
-                      <div class="col-md-6 mb-4">
-                        <div data-mdb-input-init class="form-outline">
-                          <input type="text" id="form3Example1" class="form-control" />
-                          <label class="form-label" for="form3Example1">First name</label>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-4">
-                        <div data-mdb-input-init class="form-outline">
-                          <input type="text" id="form3Example2" class="form-control" />
-                          <label class="form-label" for="form3Example2">Last name</label>
-                        </div>
-                      </div>
-                    </div>
+                  <form id="fdados" enctype="multipart/form-data">
 
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                      <input type="email" id="form3Example3" class="form-control" />
+                      <input type="email" name="email" id="email" class="form-control" />
                       <label class="form-label" for="form3Example3">Email address</label>
+                    </div>
+
+                    <!-- Cpf input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                      <input type="text" name="cpf" id="cpf" class="form-control" />
+                      <label class="form-label" for="form3Example3">CPF</label>
                     </div>
 
                     <!-- Password input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                      <input type="password" id="form3Example4" class="form-control" />
+                      <input type="password" name="senha" id="senha" class="form-control" />
                       <label class="form-label" for="form3Example4">Password</label>
                     </div>
 
@@ -186,6 +173,7 @@
   <script src="assets/js/wow.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="../JAVASCRIPT/script.js"></script>
+  <script src="../js/conexao.js"></script>
 </body>
 
 </html>

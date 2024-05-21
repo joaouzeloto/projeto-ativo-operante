@@ -14,7 +14,6 @@ public class FilterConfiguration {
         register.setFilter(new AccessFilter());
         // definindo as URLs para aplicar o filtro
         register.addUrlPatterns("/apis/adm/*");
-        register.addUrlPatterns("/apis/cidadao/*");
         return register;
     }
 }

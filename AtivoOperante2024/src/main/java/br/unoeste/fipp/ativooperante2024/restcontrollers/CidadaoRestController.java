@@ -35,32 +35,30 @@ public class CidadaoRestController {
         return "conectado";
     }
 
-    @GetMapping("cadastra-usuario")
-    public void cadastrarUsuario(@RequestParam(value="cpf") String cpf,@RequestParam(value = "email") String email,
-                                                    @RequestParam(value= "senha") int senha)
+    @PostMapping("cadastra-usuario")
+    public void cadastrarUsuario(@RequestParam(value="cpf") String cpf, @RequestParam(value="email") String email,
+                                 @RequestParam(value="senha") int senha)
     {
-        List<Usuario> lista =  usuarioservice.getAll();
+        List<Usuario> lista = usuarioservice.getAll();
         Usuario aux = lista.get(lista.size()-1);
-        salvarUsuario(new Usuario(aux.getId()+1,cpf,email,senha,0));
+        salvarUsuario(new Usuario(aux.getId()+1, cpf, email, senha, 0));
     }
 
-    @GetMapping("/add-usuario")
+    @PostMapping("/add-usuario")
     public ResponseEntity<Object> salvarUsuario(@RequestBody Usuario usuario)
     {
-        Usuario novo;
-        novo = usuarioservice.save(usuario);
-        return  new ResponseEntity<>(novo, HttpStatus.OK);
+        Usuario novo = usuarioservice.save(usuario);
+        return new ResponseEntity<>(novo, HttpStatus.OK);
     }
 
-    @GetMapping("cadastrar-denuncia")
-    public void cadastraDenuncia(@RequestParam("titulo") String titulo,@RequestParam("texto")String texto,
+    @PostMapping("cadastrar-denuncia")
+    public void cadastraDenuncia(@RequestParam("titulo") String titulo, @RequestParam("texto") String texto,
                                  @RequestParam("urgencia") int urgencia, @RequestParam("orgao") long orgao, @RequestParam("tipo") long tipo,
                                  @RequestParam("usuario") long usu)
     {
         List<Denuncia> denuncias = denunciaservice.getAll();
         Denuncia aux = denuncias.get(denuncias.size()-1);
-        denunciaservice.save(new Denuncia(aux.getId()+1,titulo,texto,urgencia, LocalDate.now(),orgaoservice.getById(orgao),
-                tiposervice.getById(tipo),usuarioservice.getById(usu)));
+        denunciaservice.save(new Denuncia(aux.getId()+1, titulo, texto, urgencia, LocalDate.now(), orgaoservice.getById(orgao),
+                tiposervice.getById(tipo), usuarioservice.getById(usu)));
     }
-
 }
