@@ -15,6 +15,9 @@ public class FeedbackService
     @Autowired
     FeedbackRepository repo;
 
+    @Autowired
+    DenunciaService denunciaService;
+
     public Feedback save(Feedback feedback){ return repo.save(feedback);}
 
     public Feedback getById(Long id)
@@ -39,5 +42,13 @@ public class FeedbackService
         {
             return false;
         }
+    }
+
+    public Feedback getByDenunciaId(Long id)
+    {
+        Denuncia aux = denunciaService.getById(id);
+        if(aux!=null)
+            return repo.findByDenuncia(aux);
+        return null;
     }
 }

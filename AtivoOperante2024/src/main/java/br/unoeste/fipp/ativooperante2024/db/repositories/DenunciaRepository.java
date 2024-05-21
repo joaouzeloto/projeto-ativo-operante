@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface DenunciaRepository extends JpaRepository<Denuncia,Long> {
     public List<Denuncia> findAllByUsuario(Usuario usuario);
+
 }
 
