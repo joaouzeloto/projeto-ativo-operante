@@ -23,25 +23,6 @@
 </head>
 
 <body>
-  <!-- Modal -->
-  <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="feedbackModalLabel">Inserir Feedback</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <textarea id="feedbackInput" class="form-control" placeholder="Digite seu feedback aqui..."
-            rows="3"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" id="btnSalvarFeedback" class="btn btn-primary">Salvar Feedback</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <button class="scroll__top scroll-to-target" data-target="html">
     <i class="fas fa-angle-up"></i>
@@ -88,7 +69,6 @@
     </div>
     <div id="header-fixed-height"></div>
   </header>
-
   <main>
     <!-- Seção: Dashboard do Administrador -->
     <section class="container my-5">
@@ -110,7 +90,7 @@
         <!-- O conteúdo dinâmico será carregado aqui -->
       </div>
     </section>
-
+  
     <!-- Modelo para a Gestão de Órgãos Competentes -->
     <template id="templateOrgaosCompetentes">
       <div class="col-lg-8">
@@ -131,9 +111,7 @@
         </div>
       </div>
     </template>
-
-
-
+    <ul id="listaDenuncias" class="list-group">
     <!-- Modelo para a Gestão de Tipos de Problemas -->
     <template id="templateTiposProblemas">
       <div class="col-lg-8">
@@ -143,8 +121,7 @@
             <form id="formTiposProblemas">
               <div class="mb-3">
                 <label for="inputTipoProblema" class="form-label">Tipo de Problema</label>
-                <input type="text" class="form-control" id="inputTipoProblema" placeholder="Digite o tipo de problema"
-                  required>
+                <input type="text" class="form-control" id="inputTipoProblema" placeholder="Digite o tipo de problema" required>
               </div>
               <button type="submit" class="btn">Cadastrar</button>
             </form>
@@ -155,7 +132,7 @@
         </div>
       </div>
     </template>
-
+  
     <!-- Modelo para a Listagem de Denúncias -->
     <template id="templateListarDenuncias">
       <div class="col-lg-8">
@@ -168,10 +145,8 @@
           </div>
         </div>
       </div>
-
     </template>
-
-  </main>
+  </main>  
 
   <br><br><br><br>
 
@@ -197,189 +172,22 @@
       </div>
     </div>
   </footer>
-  <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/isotope.pkgd.min.js"></script>
-  <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/js/jquery.magnific-popup.min.js"></script>
-  <script src="assets/js/jquery.marquee.min.js"></script>
-  <script src="assets/js/imageRevealHover.js"></script>
-  <script src="assets/js/swiper-bundle.js"></script>
-  <script src="assets/js/TweenMax.min.js"></script>
-  <script src="assets/js/slick.min.js"></script>
-  <script src="assets/js/ajax-form.js"></script>
-  <script src="assets/js/wow.min.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="../JAVASCRIPT/script.js"></script>
+  <script src="../js/vendor/jquery-3.6.0.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/isotope.pkgd.min.js"></script>
+  <script src="../js/imagesloaded.pkgd.min.js"></script>
+  <script src="../js/jquery.magnific-popup.min.js"></script>
+  <script src="../js/jquery.marquee.min.js"></script>
+  <script src="../js/imageRevealHover.js"></script>
+  <script src="../js/swiper-bundle.js"></script>
+  <script src="../js/TweenMax.min.js"></script>
+  <script src="../js/slick.min.js"></script>
+  <script src="../js/ajax-form.js"></script>
+  <script src="../js/wow.min.js"></script>
+  <script src="../js/main.js"></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const btnOrgaosCompetentes = document.getElementById('btnOrgaosCompetentes');
-      const btnTiposProblemas = document.getElementById('btnTiposProblemas');
-      const btnListarDenuncias = document.getElementById('btnListarDenuncias');
-      const content = document.getElementById('content');
+  <script src="../js/administrador.js"></script>
 
-      // Elementos dos modelos
-      const templateOrgaosCompetentes = document.getElementById('templateOrgaosCompetentes').content;
-      const templateTiposProblemas = document.getElementById('templateTiposProblemas').content;
-      const templateListarDenuncias = document.getElementById('templateListarDenuncias').content;
-
-      // Função para preencher a lista de órgãos responsáveis
-      function preencherListaOrgaos(orgaos) {
-        const listaOrgaos = document.getElementById('listaOrgaos');
-        listaOrgaos.innerHTML = ''; // Limpa a lista anterior
-
-        orgaos.forEach(orgao => {
-          const li = document.createElement('li');
-          li.textContent = orgao.nome;
-
-          listaOrgaos.appendChild(li);
-        });
-      }
-
-      // Função para preencher a lista de tipos de problemas
-      function preencherListaTiposProblemas(tiposProblemas) {
-        const listaTiposProblemas = document.getElementById('listaTiposProblemas');
-        listaTiposProblemas.innerHTML = ''; // Limpa a lista anterior
-
-        tiposProblemas.forEach(tipo => {
-          const li = document.createElement('li');
-          li.textContent = tipo.nome;
-
-          listaTiposProblemas.appendChild(li);
-        });
-      }
-
-      function showOrgaosCompetentes() {
-        content.innerHTML = ''; // Limpa o conteúdo
-        content.appendChild(document.importNode(templateOrgaosCompetentes, true));
-
-        // Aqui você implementaria o CRUD para órgãos competentes
-        preencherListaOrgaos(orgaos); // Chamada da função para preencher a lista de órgãos competentes
-      }
-
-      function showTiposProblemas() {
-        content.innerHTML = ''; // Limpa o conteúdo
-        content.appendChild(document.importNode(templateTiposProblemas, true));
-
-        // Aqui você implementaria o CRUD para tipos de problemas
-        preencherListaTiposProblemas(tiposProblemas); // Chamada da função para preencher a lista de tipos de problemas
-      }
-
-      function showListarDenuncias() {
-        content.innerHTML = ''; // Limpa o conteúdo
-        content.appendChild(document.importNode(templateListarDenuncias, true));
-
-        const listaDenuncias = document.getElementById('listaDenuncias');
-        listaDenuncias.innerHTML = ''; // Limpa a lista anterior
-
-        // Preenche a lista com as denúncias
-        denuncias.forEach((denuncia, index) => {
-          const li = document.createElement('li');
-          li.className = 'list-group-item d-flex justify-content-between align-items-center';
-          li.innerHTML = `<strong>${denuncia.titulo}</strong><br>${denuncia.descricao}`;
-
-          // Botão para apagar denúncia
-          const btnApagar = document.createElement('button');
-          btnApagar.className = 'btn-sm';
-          btnApagar.textContent = 'Apagar';
-          btnApagar.style.color = "black";
-          btnApagar.style.marginRight = "5px";
-          btnApagar.addEventListener('click', () => apagarDenuncia(index));
-
-          // Botão para criar feedback
-          const btnFeedback = document.createElement('button');
-          btnFeedback.className = 'btn-sm ml-10';
-          btnFeedback.textContent = 'Feedback';
-          btnFeedback.style.color = "black";
-          btnFeedback.addEventListener('click', () => criarFeedback(index));
-
-          // Adiciona os botões à direita da denúncia
-          const divBotoes = document.createElement('div');
-          divBotoes.appendChild(btnApagar);
-          divBotoes.appendChild(btnFeedback);
-
-          li.appendChild(divBotoes);
-
-          listaDenuncias.appendChild(li);
-        });
-      }
-
-
-      function apagarDenuncia(index) {
-        // Aqui você implementaria a lógica para apagar a denúncia com o índice fornecido
-        // Exemplo: denuncias.splice(index, 1);
-        // Em seguida, você poderia recarregar a lista de denúncias
-        showListarDenuncias();
-      }
-
-      function criarFeedback(index) {
-        // Seleciona a denúncia correspondente
-        const denuncia = denuncias[index];
-
-        // Verifica se já existe um campo de texto para o feedback
-        const feedbackInputExistente = document.querySelector(`#listaDenuncias li:nth-child(${index + 1}) .form-control-feedback`);
-        if (feedbackInputExistente) {
-          // Se já existe, não faz nada
-          return;
-        }
-
-        // Cria um campo de texto para o feedback
-        const feedbackInput = document.createElement('textarea');
-        feedbackInput.className = 'form-control mt-2 form-control-feedback';
-        feedbackInput.placeholder = 'Digite seu feedback aqui...';
-        feedbackInput.rows = 3;
-
-        // Cria um botão para salvar o feedback
-        const btnSalvarFeedback = document.createElement('button');
-        btnSalvarFeedback.className = 'btn mt-2';
-        btnSalvarFeedback.textContent = 'Salvar Feedback';
-        btnSalvarFeedback.addEventListener('click', () => {
-          const feedback = feedbackInput.value;
-          if (feedback) {
-            alert('Feedback salvo: ' + feedback);
-            // Aqui você pode implementar a lógica para salvar o feedback no backend
-
-            // Remove o campo de texto e o botão de salvar após salvar o feedback
-            feedbackInput.remove();
-            btnSalvarFeedback.remove();
-          } else {
-            alert('Por favor, insira um feedback.');
-          }
-        });
-
-        // Adiciona o campo de texto e o botão à denúncia
-        const denunciaLi = document.querySelector(`#listaDenuncias li:nth-child(${index + 1})`);
-        denunciaLi.appendChild(feedbackInput);
-        denunciaLi.appendChild(btnSalvarFeedback);
-      }
-
-      // Listeners de eventos para os botões
-      btnOrgaosCompetentes.addEventListener('click', showOrgaosCompetentes);
-      btnTiposProblemas.addEventListener('click', showTiposProblemas);
-      btnListarDenuncias.addEventListener('click', showListarDenuncias);
-
-      // Exibe o conteúdo inicial
-      showListarDenuncias(); // Por exemplo, exibir a listagem de denúncias por padrão
-
-      // Dados de exemplo para as listas de órgãos responsáveis e tipos de problemas
-      const orgaos = [
-        { nome: 'Órgão 1' },
-        { nome: 'Órgão 2' },
-        { nome: 'Órgão 3' }
-      ];
-
-      const tiposProblemas = [
-        { nome: 'Tipo 1' },
-        { nome: 'Tipo 2' },
-        { nome: 'Tipo 3' }
-      ];
-
-      // Preenche as listas com os dados
-      preencherListaOrgaos(orgaos);
-      preencherListaTiposProblemas(tiposProblemas);
-    });
-  </script>
 
 
 </body>
