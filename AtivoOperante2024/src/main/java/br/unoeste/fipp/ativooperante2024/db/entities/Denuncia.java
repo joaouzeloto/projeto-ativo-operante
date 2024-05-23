@@ -3,6 +3,8 @@ package br.unoeste.fipp.ativooperante2024.db.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="denuncia")
 public class Denuncia {
@@ -17,7 +19,7 @@ public class Denuncia {
     @Column(name="den_urgencia")
     private int urgencia;
     @Column(name="den_data")
-    private LocalDate data;
+    private LocalDateTime data;
     @ManyToOne
     @JoinColumn(name="org_id",nullable = false)
     private Orgao orgao;
@@ -34,7 +36,7 @@ public class Denuncia {
         this(0L,"","",0,null,null,null,null);
     }
 
-    public Denuncia(Long id, String titulo, String texto, int urgencia, LocalDate data, Orgao orgao, Tipo tipo, Usuario usuario) {
+    public Denuncia(Long id, String titulo, String texto, int urgencia, LocalDateTime data, Orgao orgao, Tipo tipo, Usuario usuario) {
         Id = id;
         this.titulo = titulo;
         this.texto = texto;
@@ -77,11 +79,11 @@ public class Denuncia {
         this.urgencia = urgencia;
     }
 
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 

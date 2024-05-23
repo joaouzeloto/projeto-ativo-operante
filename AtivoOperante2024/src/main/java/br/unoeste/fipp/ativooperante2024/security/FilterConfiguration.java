@@ -13,7 +13,7 @@ public class FilterConfiguration {
         FilterRegistrationBean<AccessFilter> register = new FilterRegistrationBean<>();
         register.setFilter(new AccessFilter());
         // definindo as URLs para aplicar o filtro
-        register.addUrlPatterns("/apis/adm/*");
+        register.addUrlPatterns("/apis/post/*");
         return register;
     }
 }

@@ -20,6 +20,12 @@
   <link rel="stylesheet" href="../css/slick.css">
   <link rel="stylesheet" href="../css/spacing.css">
   <link rel="stylesheet" href="../css/main.css">
+
+  <style>
+    .denuncia-details p {
+      margin: 0; 
+    }
+  </style>
 </head>
 
 <body>
@@ -30,47 +36,45 @@
 
   <header class="header__style-two">
     <div class="header__top" style="margin: 0px !important; padding-bottom: 10px; padding-top: 30px;">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-xl-3 col-lg-4 d-none d-lg-block">
-                    <div class="d-flex gap-4 align-items-center">
-                        <div class="header__top-logo logo">
-                            <a href="../../index.html" class="logo-dark">
-                                <img src="../img/logoAlerta.png" alt="Logo">
-                            </a>
-                            <a href="../../index.html" class="logo-light">
-                                <img src="../img/logoAlerta.png" alt="Logo">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-9 col-lg-8">
-                    <nav class="tgmenu__nav">
-                        <div class="logo d-block d-lg-none">
-                            <a href="../../index.html" class="logo-dark"><img src="../img/logoAlerta.png"
-                                    alt="Logo"></a>
-                            <a href="../../index.html" class="logo-light"><img src="../img/logoAlerta.png"
-                                    alt="Logo"></a>
-
-                        </div>
-                        <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
-                            <ul class="navigation">
-                                <li><a>Seja a diferença!</a></li>
-                            </ul>
-
-                            <!-- Left links -->
-                            <div class="d-flex align-items-center">
-                                <button data-mdb-ripple-init type="button" class="btn px-3 me-2"
-                                    onclick="window.location.href='../../index.html'">Sair</button>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-xl-3 col-lg-4 d-none d-lg-block">
+            <div class="d-flex gap-4 align-items-center">
+              <div class="header__top-logo logo">
+                <a href="../../index.html" class="logo-dark">
+                  <img src="../img/logoAlerta.png" alt="Logo">
+                </a>
+                <a href="../../index.html" class="logo-light">
+                  <img src="../img/logoAlerta.png" alt="Logo">
+                </a>
+              </div>
             </div>
+          </div>
+          <div class="col-xl-9 col-lg-8">
+            <nav class="tgmenu__nav">
+              <div class="logo d-block d-lg-none">
+                <a href="../../index.html" class="logo-dark"><img src="../img/logoAlerta.png" alt="Logo"></a>
+                <a href="../../index.html" class="logo-light"><img src="../img/logoAlerta.png" alt="Logo"></a>
+
+              </div>
+              <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
+                <ul class="navigation">
+                  <li><a>Seja a diferença!</a></li>
+                </ul>
+
+                <!-- Left links -->
+                <div class="d-flex align-items-center">
+                  <button data-mdb-ripple-init type="button" class="btn px-3 me-2"
+                    onclick="window.location.href='../../index.html'">Sair</button>
+                </div>
+              </div>
+            </nav>
+          </div>
         </div>
+      </div>
     </div>
     <div id="header-fixed-height"></div>
-</header>
+  </header>
 
   <main>
 
@@ -93,6 +97,7 @@
       </div>
     </section>
 
+    <div id="formContainer"></div>
 
     <template id="templateEnviarDenuncia">
       <div class="col-lg-8">
@@ -102,13 +107,31 @@
             <form id="formDenuncia">
               <div class="form-group">
                 <label for="denunciaTitulo">Título</label>
-                <input type="text" class="form-control" id="denunciaTitulo" placeholder="Título da Denúncia" required>
+                <input name="denunciaTitulo" type="text" class="form-control" id="denunciaTitulo" placeholder="Título da Denúncia" required>
               </div>
               <div class="form-group">
                 <label for="denunciaDescricao">Descrição</label>
-                <textarea class="form-control" id="denunciaDescricao" rows="3" placeholder="Descrição da Denúncia"
+                <textarea name="denunciaDescricao" class="form-control" id="denunciaDescricao" rows="3" placeholder="Descrição da Denúncia"
                   required></textarea>
               </div>
+              <div class="form-group">
+                <label for="denunciaUrgencia">Urgência de 1 a 5</label>
+                <input name="denunciaUrgencia" type="number" class="form-control" id="denunciaUrgencia" min="1" max="5"
+                  placeholder="Urgência da Denúncia" required>
+              </div>
+              <div class="form-group">
+                <label for="denunciaOrgao">Órgão</label>
+                <select name="denunciaOrgao" class="form-control" id="denunciaOrgao" required>
+                  <option value="">Selecione um órgão</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="denunciaTipoProblema">Tipo de Problema</label>
+                <select name="denunciaTipoProblema" class="form-control" id="denunciaTipoProblema" required>
+                  <option value="">Selecione um tipo de problema</option>
+                </select>
+              </div>
+              <input type="hidden" id="denunciaUsuario" name="denunciaUsuario" value="2">
               <button type="submit" class="btn mt-3">Enviar</button>
             </form>
           </div>
@@ -129,31 +152,32 @@
       </div>
     </template>
 
+
   </main>
 
   <br><br><br><br>
   <footer class="footer-area black-bg">
     <div class="container">
-        <div class="footer__logo-wrap">
-            <div class="row align-items-center">
-                <div class="col-lg-3 col-md-4">
-                    <div class="footer__logo logo">
-                        <a href="../../index.html"><img src="../img/logoAlerta.png" alt="Logo"></a>
-                    </div>
-                </div>
+      <div class="footer__logo-wrap">
+        <div class="row align-items-center">
+          <div class="col-lg-3 col-md-4">
+            <div class="footer__logo logo">
+              <a href="../../index.html"><img src="../img/logoAlerta.png" alt="Logo"></a>
             </div>
+          </div>
         </div>
-        <div class="footer__copyright">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="copyright__text">
-                        <p>Copyright & Design By <span> Diego Godoy - João Uzeloto</span> - 2024</p>
-                    </div>
-                </div>
+      </div>
+      <div class="footer__copyright">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="copyright__text">
+              <p>Copyright & Design By <span> Diego Godoy - João Uzeloto</span> - 2024</p>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</footer>
+  </footer>
   <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/js/isotope.pkgd.min.js"></script>
@@ -169,82 +193,8 @@
   <script src="assets/js/main.js"></script>
   <script src="../JAVASCRIPT/script.js"></script>
 
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const btnEnviarDenuncia = document.getElementById('btnEnviarDenuncia');
-      const btnVisualizarDenuncias = document.getElementById('btnVisualizarDenuncias');
-      const content = document.getElementById('content');
+  <script src="../js/perfil.js"></script>
   
-      // Elementos dos modelos
-      const templateEnviarDenuncia = document.getElementById('templateEnviarDenuncia').content;
-      const templateVisualizarDenuncias = document.getElementById('templateVisualizarDenuncias').content;
-  
-      // Dados de exemplo para as denúncias
-      let denuncias = [
-        { titulo: 'Denúncia 1', descricao: 'Descrição da denúncia 1' },
-        { titulo: 'Denúncia 2', descricao: 'Descrição da denúncia 2' }
-      ];
-  
-      function showEnviarDenuncia() {
-        content.innerHTML = ''; // Limpa o conteúdo
-        content.appendChild(document.importNode(templateEnviarDenuncia, true));
-        
-        const formDenuncia = document.getElementById('formDenuncia');
-        formDenuncia.addEventListener('submit', function (e) {
-          e.preventDefault();
-          const titulo = document.getElementById('denunciaTitulo').value;
-          const descricao = document.getElementById('denunciaDescricao').value;
-          
-          // Aqui você faria um POST com os dados do formulário
-          // Exemplo de como seria o POST com fetch:
-          // fetch('url_da_sua_api', {
-          //   method: 'POST',
-          //   headers: { 'Content-Type': 'application/json' },
-          //   body: JSON.stringify({ titulo, descricao })
-          // })
-          // .then(response => response.json())
-          // .then(data => {
-          //   // Trate a resposta da API conforme necessário
-          //   console.log(data);
-          // });
-  
-          // Adiciona a nova denúncia à lista
-          denuncias.push({ titulo, descricao });
-          
-          // Limpa o formulário
-          formDenuncia.reset();
-          
-          // Exibe mensagem de sucesso
-          alert('Denúncia enviada com sucesso!');
-        });
-      }
-  
-      function showVisualizarDenuncias() {
-        content.innerHTML = ''; // Limpa o conteúdo
-        content.appendChild(document.importNode(templateVisualizarDenuncias, true));
-        
-        const listaDenuncias = document.getElementById('listaDenuncias');
-        listaDenuncias.innerHTML = ''; // Limpa a lista anterior
-        
-        // Preenche a lista com as denúncias
-        denuncias.forEach(denuncia => {
-          const li = document.createElement('li');
-          li.className = 'list-group-item';
-          li.innerHTML = `<strong>${denuncia.titulo}</strong><br>${denuncia.descricao}`;
-          listaDenuncias.appendChild(li);
-        });
-      }
-  
-      // Listeners de eventos para os botões
-      btnEnviarDenuncia.addEventListener('click', showEnviarDenuncia);
-      btnVisualizarDenuncias.addEventListener('click', showVisualizarDenuncias);
-  
-      // Exibe o conteúdo inicial
-      showVisualizarDenuncias();
-    });
-  </script>
-
 </body>
 
 </html>
