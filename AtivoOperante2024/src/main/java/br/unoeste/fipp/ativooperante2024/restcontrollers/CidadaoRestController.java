@@ -8,6 +8,7 @@ import br.unoeste.fipp.ativooperante2024.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -40,14 +41,6 @@ public class CidadaoRestController {
         return "conectado";
     }
 
-    @PostMapping("cadastra-usuario")
-    public void cadastrarUsuario(@RequestParam(value="cpf") String cpf, @RequestParam(value="email") String email,
-                                 @RequestParam(value="senha") int senha)
-    {
-        List<Usuario> lista = usuarioservice.getAll();
-        Usuario aux = lista.get(lista.size()-1);
-        salvarUsuario(new Usuario(aux.getId()+1, cpf, email, senha, 0));
-    }
 
     @PostMapping("/add-usuario")
     public ResponseEntity<Object> salvarUsuario(@RequestBody Usuario usuario)
