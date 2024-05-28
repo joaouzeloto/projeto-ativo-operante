@@ -53,13 +53,19 @@ async function login() {
             // Assume que a resposta contém o token
             const token = data.token;
             const id = data.id;
+            const admin = data.admin;
 
             // Armazena o token no localStorage (ou sessionStorage)
             localStorage.setItem('authToken', token);
             localStorage.setItem('id', id);
+            localStorage.setItem('admin',admin);
 
             // Redireciona para a página desejada
-            window.location.href = '../html/perfil.html';
+            if(admin==true)
+                window.location.href = '../html/administrador.html';
+            else
+                window.location.href = '../html/perfil.html'
+
         } else {
             // Trata erros de autenticação
             const errorData = await response.json();
@@ -80,7 +86,10 @@ function hasToken() {
     const token = localStorage.getItem('authToken');
 
     if (token) {
-        window.location.href = '../html/perfil.html';
+        if(localStorage.admin)
+            window.location.href = '../html/administrador.html';
+        else
+            window.location.href = '../html/perfil.html';
     } else {
         console.log('Nenhum token encontrado');
     }

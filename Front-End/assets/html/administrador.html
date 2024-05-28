@@ -9,7 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.png">
-  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.png">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/animate.min.css">
   <link rel="stylesheet" href="../css/magnific-popup.css">
@@ -49,17 +48,14 @@
               <div class="logo d-block d-lg-none">
                 <a href="../../index.html" class="logo-dark"><img src="../img/logoAlerta.png" alt="Logo"></a>
                 <a href="../../index.html" class="logo-light"><img src="../img/logoAlerta.png" alt="Logo"></a>
-
               </div>
               <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
                 <ul class="navigation">
                   <li><a>Seja a diferença!</a></li>
                 </ul>
-
-                <!-- Left links -->
                 <div class="d-flex align-items-center">
                   <button data-mdb-ripple-init type="button" class="btn px-3 me-2"
-                    onclick="window.location.href='../../index.html'">Sair</button>
+                    onclick="logout()">Sair</button>
                 </div>
               </div>
             </nav>
@@ -70,7 +66,6 @@
     <div id="header-fixed-height"></div>
   </header>
   <main>
-    <!-- Seção: Dashboard do Administrador -->
     <section class="container my-5">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
@@ -90,8 +85,6 @@
         <!-- O conteúdo dinâmico será carregado aqui -->
       </div>
     </section>
-  
-    <!-- Modelo para a Gestão de Órgãos Competentes -->
     <template id="templateOrgaosCompetentes">
       <div class="col-lg-8">
         <div class="card">
@@ -104,15 +97,24 @@
               </div>
               <button type="submit" class="btn">Cadastrar</button>
             </form>
-            <div id="listaOrgaos" class="mt-4">
-              <!-- A lista de órgãos competentes será carregada aqui -->
+            <div class="table-responsive mt-4">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th style="width: 20%; max-width: 20%; overflow: hidden; text-overflow: ellipsis;">ID</th>
+                    <th style="width: 80%; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">Nome do Órgão</th>
+                  </tr>
+                </thead>
+                <tbody id="listaOrgaos">
+                  <!-- A lista de órgãos competentes será carregada aqui -->
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </template>
-    <ul id="listaDenuncias" class="list-group">
-    <!-- Modelo para a Gestão de Tipos de Problemas -->
+    
     <template id="templateTiposProblemas">
       <div class="col-lg-8">
         <div class="card">
@@ -125,31 +127,47 @@
               </div>
               <button type="submit" class="btn">Cadastrar</button>
             </form>
-            <div id="listaTiposProblemas" class="mt-4">
-              <!-- A lista de tipos de problemas será carregada aqui -->
+            <div class="table-responsive mt-4">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th style="width: 20%; max-width: 20%; overflow: hidden; text-overflow: ellipsis;">ID</th>
+                    <th style="width: 80%; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">Nome do Tipo de Problema</th>
+                  </tr>
+                </thead>
+                <tbody id="listaTiposProblemas">
+                  <!-- A lista de tipos de problemas será carregada aqui -->
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </template>
-  
-    <!-- Modelo para a Listagem de Denúncias -->
     <template id="templateListarDenuncias">
       <div class="col-lg-8">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Listagem de Denúncias</h5>
-            <ul id="listaDenuncias" class="list-group">
-              <!-- A lista de denúncias será carregada aqui -->
-            </ul>
+            <div class="table-responsive">
+              <table id="tabeladenuncias" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th style="width: 20%; max-width: 20%; overflow: hidden; text-overflow: ellipsis;">ID</th>
+                    <th style="width: 30%; max-width: 30%; overflow: hidden; text-overflow: ellipsis;">Título</th>
+                    <th style="width: 30%; max-width: 30%; overflow: hidden; text-overflow: ellipsis;">Descrição</th>
+                  </tr>
+                </thead>
+                <tbody id="listaDenuncias">
+                  <!-- A lista de denúncias será carregada aqui -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </template>
-  </main>  
-
-  <br><br><br><br>
-
+    </template>    
+  </main>
   <footer class="footer-area black-bg">
     <div class="container">
       <div class="footer__logo-wrap">
@@ -185,11 +203,9 @@
   <script src="../js/ajax-form.js"></script>
   <script src="../js/wow.min.js"></script>
   <script src="../js/main.js"></script>
-
   <script src="../js/administrador.js"></script>
-
-
 
 </body>
 
 </html>
+

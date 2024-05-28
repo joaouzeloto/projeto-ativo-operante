@@ -43,7 +43,7 @@ public class AdminRestController {
     }
 
     // demais apis
-    @GetMapping("/delete-orgao")
+    @DeleteMapping("/delete-orgao")
     public ResponseEntity<Object> excluirOrgao(@RequestParam(value="id") Long id)
     {
         if(orgaoservice.delete(id))
@@ -95,7 +95,7 @@ public class AdminRestController {
         return new ResponseEntity<>(denunciaservice.getAll(),HttpStatus.OK);
     }
 
-    @GetMapping("/delete-denuncias")
+    @DeleteMapping("/delete-denuncia")
     public ResponseEntity<Object> excluirDenuncia(@RequestParam(value="id") Long id)
     {
         if(denunciaservice.delete(id))
@@ -112,7 +112,7 @@ public class AdminRestController {
         return new ResponseEntity<>(tipo,HttpStatus.OK);
     }
 
-    @GetMapping("/add-tipo")
+    @PostMapping("/add-tipo")
     public ResponseEntity<Object> salvarTipo(@RequestBody Tipo tipo)
     {
         Tipo novo;
@@ -126,7 +126,7 @@ public class AdminRestController {
         return new ResponseEntity<>(tiposervice.getAll(),HttpStatus.OK);
     }
 
-    @GetMapping("/delete-tipo")
+    @DeleteMapping("/delete-tipo")
     public ResponseEntity<Object> excluirTipo(@RequestParam(value="id") Long id)
     {
         if(tiposervice.delete(id))

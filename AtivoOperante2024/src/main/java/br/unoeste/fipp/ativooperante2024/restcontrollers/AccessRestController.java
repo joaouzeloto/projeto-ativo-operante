@@ -36,7 +36,7 @@ public class AccessRestController
             var token = tokenService.GenerateToken((Usuario) auth.getPrincipal());
             String email = tokenService.validateToken(token);
             Usuario aux = usuarioservice.getByEmail(email);
-            return ResponseEntity.ok(new LoginResponseDTO(token, aux.getId()));
+            return ResponseEntity.ok(new LoginResponseDTO(token, aux.getId(),aux.getNivel()==0));
         }catch (Exception e)
         {
             try {
@@ -45,7 +45,7 @@ public class AccessRestController
                 String email = tokenService.validateToken(token);
                 Usuario aux = usuarioservice.getByEmail(email);
                 if(senhaCodificada.equals(aux.getSenha()))
-                    return ResponseEntity.ok(new LoginResponseDTO(token, aux.getId()));
+                    return ResponseEntity.ok(new LoginResponseDTO(token, aux.getId(),aux.getNivel()==0));
             }
             catch (Exception ex)
             {
