@@ -3,6 +3,8 @@ const usuarioLogadoId = 0;
 
 function mudarUsuario(numero){usuarioLogadoId = localStorage.getItem('id');}
 
+function retornarNum(){return usuarioLogadoId;}
+
 document.addEventListener('DOMContentLoaded', function () {
 
 
@@ -57,7 +59,12 @@ document.addEventListener('DOMContentLoaded', function () {
     
     async function fetchFeedback(denunciaId) {
         try {
-            const response = await fetch(`http://localhost:8080/apis/cidadao/get-feedback-by-denuncia-id?id=${denunciaId}`);
+            const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+            const response = await fetch(`http://localhost:8080/apis/cidadao/get-feedback-by-denuncia-id?id=${denunciaId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             if (response.ok) {
                 const data = await response.json();
                 return data.texto || "Nenhum feedback cadastrado.";  // Se não tiver texto, mostra mensagem padrão.
@@ -69,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return " "; // Mensagem de erro para exceções de rede ou outras.
         }
     }
+    
     
     
   
@@ -83,25 +91,40 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       };
   
-      async function carregarDenuncias(userId) {
+      async function carregarDenuncias() {
         try {
-          const response = await fetch(`http://localhost:8080/apis/cidadao/get-all-denuncia-cidadao?id=${userId}`);
-          if (!response.ok) {
-            throw new Error('Falha ao carregar denúncias: ' + response.statusText);
-          }
-          return await response.json();
+            const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+            const response = await fetch(`http://localhost:8080/apis/cidadao/get-all-denuncia-cidadao?id=${localStorage.getItem('id')}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Falha ao carregar denúncias: ' + response.statusText);
+            }
+            return await response.json();
         } catch (error) {
-          console.error('Erro ao carregar denúncias:', error);
-          return []; 
+            console.error('Erro ao carregar denúncias:', error);
+            return [];
         }
-      }
+    }
+    
   
 
       function bindFormSubmit() {
+        const userId = localStorage.getItem('id');
+        if (userId) {
+            const denunciaUsuarioInput = document.getElementById('denunciaUsuario');
+            if (denunciaUsuarioInput) {
+                denunciaUsuarioInput.value = userId;
+            }
+        }
         const formDenuncia = document.getElementById('formDenuncia');
         formDenuncia.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(formDenuncia);
+            
+            const token = localStorage.getItem('authToken');
     
             // Debugging FormData
             for (let [key, value] of formData.entries()) {
@@ -110,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function () {
     
             fetch('http://localhost:8080/apis/cidadao/cadastrar-denuncia', {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 body: formData
             })
             .then(response => {
@@ -128,13 +154,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Erro ao cadastrar denúncia: ' + error.message);
             });
         });
-    }    
+    }
     
     
 
     async function carregarOrgaos() {
         try {
-            const responseOrgaos = await fetch('http://localhost:8080/apis/cidadao/get-all-orgaos');
+            const token = localStorage.getItem('authToken');
+            const responseOrgaos = await fetch('http://localhost:8080/apis/cidadao/get-all-orgaos', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            if (!responseOrgaos.ok) {
+                throw new Error('Erro na requisição dos órgãos');
+            }
+    
             const orgaos = await responseOrgaos.json();
             const orgaoSelect = document.getElementById('denunciaOrgao');
             let options = `<option value="">Selecione um órgão</option>`;
@@ -146,10 +183,21 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Erro ao carregar órgãos:', error);
         }
     }
-
+    
     async function carregarTiposProblema() {
         try {
-            const responseTipos = await fetch('http://localhost:8080/apis/cidadao/get-all-tipos');
+            const token = localStorage.getItem('authToken');
+            const responseTipos = await fetch('http://localhost:8080/apis/cidadao/get-all-tipos', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            if (!responseTipos.ok) {
+                throw new Error('Erro na requisição dos tipos de problema');
+            }
+    
             const tiposProblema = await responseTipos.json();
             const tipoProblemaSelect = document.getElementById('denunciaTipoProblema');
             let options = `<option value="">Selecione um tipo de problema</option>`;
@@ -161,6 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Erro ao carregar tipos de problema:', error);
         }
     }
+    
 
     // Inicialização
     btnEnviarDenuncia.addEventListener('click', showEnviarDenuncia);
@@ -171,5 +220,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function logout(){
     localStorage.clear("authToken");
-    window.location.href = '../index.html';
+    window.location.href = '../../index.html';
 }
