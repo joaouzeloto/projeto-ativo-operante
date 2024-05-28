@@ -85,7 +85,7 @@
                             class="img-fluid" alt="Phone image">
                     </div>
                     <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                        <form>
+                        <form id="form-login" enctype="multipart/form-data">
                             <h4 style="font-size: 40px !important; margin: 0 auto;" class="">
                                 Realize o seu <span class="text-primary">Login</span>
                             </h4>
@@ -93,19 +93,19 @@
 
                             <!-- Email input -->
                             <div data-mdb-input-init class="form-outline mb-4">
-                                <input type="email" id="form1Example13" class="form-control form-control-lg" />
+                                <input name="email" type="email" id="form1Example13" class="form-control form-control-lg" />
                                 <label class="form-label" for="form1Example13">Email address</label>
                             </div>
 
                             <!-- Password input -->
                             <div data-mdb-input-init class="form-outline mb-4">
-                                <input type="password" id="form1Example23" class="form-control form-control-lg" />
+                                <input name="senha" type="password" id="form1Example23" class="form-control form-control-lg" />
                                 <label class="form-label" for="form1Example23">Password</label>
                             </div>
 
 
                             <!-- Submit button -->
-                            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn">Sign in</button>
+                            <button type="button" onclick="login(event)" data-mdb-button-init data-mdb-ripple-init class="btn">Sign in</button>
 
                             <p style="margin-top: 10px;">Não é um membro? <a href="registro.html">Register</a></p>
                         </form>
@@ -155,6 +155,14 @@
     <script src="../js/ajax-form.js"></script>
     <script src="../js/wow.min.js"></script>
     <script src="../js/main.js"></script>
+
+    <script src="../js/conexao.js"></script>
+    <script src="../js/perfil.js"></script>
+    <script>
+        window.onload = function() {
+            hasToken();
+        };
+    </script>
 </body>
 
 </html>

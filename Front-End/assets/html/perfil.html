@@ -65,7 +65,7 @@
                 <!-- Left links -->
                 <div class="d-flex align-items-center">
                   <button data-mdb-ripple-init type="button" class="btn px-3 me-2"
-                    onclick="window.location.href='../../index.html'">Sair</button>
+                    onclick="logout()">Sair</button>
                 </div>
               </div>
             </nav>
@@ -131,7 +131,7 @@
                   <option value="">Selecione um tipo de problema</option>
                 </select>
               </div>
-              <input type="hidden" id="denunciaUsuario" name="denunciaUsuario" value="2">
+              <input type="hidden" id="denunciaUsuario" name="denunciaUsuario" value="0">
               <button type="submit" class="btn mt-3">Enviar</button>
             </form>
           </div>
@@ -194,6 +194,11 @@
   <script src="../JAVASCRIPT/script.js"></script>
 
   <script src="../js/perfil.js"></script>
+  <script>
+    window.onload = function() {
+        mudarUsuario();
+    };
+</script>
   
 </body>
 

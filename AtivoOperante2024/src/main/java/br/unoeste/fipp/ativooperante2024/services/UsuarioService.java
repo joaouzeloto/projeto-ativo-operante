@@ -19,6 +19,11 @@ public class UsuarioService
         return  repo.save(usuario);
     }
 
+    public Usuario getByEmail(String email)
+    {
+        return repo.getUsuarioByEmail(email);
+    }
+
     public Usuario getById(Long id)
     {
         Usuario usuario = repo.findById(id).get();
