@@ -17,7 +17,6 @@ public class TokenService {
     private String secret;
 
     public String GenerateToken(Usuario usuario) {
-        System.out.println(secret);
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create().withIssuer("apis/security/").withSubject(usuario.getEmail()).
@@ -30,7 +29,6 @@ public class TokenService {
 
 
     public String validateToken(String token) {
-        System.out.println(secret);
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String email = JWT.require(algorithm).

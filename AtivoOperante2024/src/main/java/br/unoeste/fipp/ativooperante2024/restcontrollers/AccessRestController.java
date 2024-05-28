@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("apis/security/")
 public class AccessRestController
@@ -30,11 +31,29 @@ public class AccessRestController
     public ResponseEntity<Object> logar(@RequestBody AuthenticationDTO data)
     {
         var userNamePassword = new UsernamePasswordAuthenticationToken(data.email(),data.senha());
-        var auth = this.authenticationManager.authenticate(userNamePassword);
+        try {
+            var auth = this.authenticationManager.authenticate(userNamePassword);
+            var token = tokenService.GenerateToken((Usuario) auth.getPrincipal());
+            String email = tokenService.validateToken(token);
+            Usuario aux = usuarioservice.getByEmail(email);
+            return ResponseEntity.ok(new LoginResponseDTO(token, aux.getId()));
+        }catch (Exception e)
+        {
+            try {
+                var token = tokenService.GenerateToken(usuarioservice.getByEmail(data.email()));
+                String senhaCodificada = passwordEncoder.encode(String.valueOf(data.senha()));
+                String email = tokenService.validateToken(token);
+                Usuario aux = usuarioservice.getByEmail(email);
+                if(senhaCodificada.equals(aux.getSenha()))
+                    return ResponseEntity.ok(new LoginResponseDTO(token, aux.getId()));
+            }
+            catch (Exception ex)
+            {
 
-        var token = tokenService.GenerateToken((Usuario) auth.getPrincipal());
+            }
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        }
+        return null;
     }
 
     @Autowired

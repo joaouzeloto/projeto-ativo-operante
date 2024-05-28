@@ -1,7 +1,11 @@
 
+const usuarioLogadoId = 0;
+
+function mudarUsuario(numero){usuarioLogadoId = localStorage.getItem('id');}
+
 document.addEventListener('DOMContentLoaded', function () {
 
-    const usuarioLogadoId = 2;
+
 
     // Seleção dos botões
     const btnEnviarDenuncia = document.getElementById('btnEnviarDenuncia');
@@ -124,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Erro ao cadastrar denúncia: ' + error.message);
             });
         });
-    }
+    }    
     
     
 
@@ -164,3 +168,8 @@ document.addEventListener('DOMContentLoaded', function () {
     showVisualizarDenuncias();
 
 });
+
+function logout(){
+    localStorage.clear("authToken");
+    window.location.href = '../index.html';
+}
