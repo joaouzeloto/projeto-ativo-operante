@@ -166,18 +166,40 @@ public class AdminRestController {
             return new ResponseEntity<>("",HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/cadastra-feedback")
-    public void cadastraFeedback(@RequestParam(value = "texto") String texto,@RequestParam(value = "denuncia") Long denuncia)
-    {
-        List<Feedback> listaFee = feedbackrepository.findAll();
-        if(listaFee!=null)
-        {
-            feedbackservice.save(new Feedback(listaFee.get(listaFee.size()-1).getId()+1,texto,denunciaservice.getById(denuncia)));
+    @PostMapping("/cadastra-feedback")
+    public ResponseEntity<Object> cadastraFeedback(@RequestBody FeedbackDTO feedbackDTO) {
+        Denuncia denuncia = denunciaservice.getById(feedbackDTO.getDenuncia());
+        if (denuncia != null) {
+            List<Feedback> listaFee = feedbackservice.getAll();
+            Long id = (listaFee != null && !listaFee.isEmpty()) ? listaFee.get(listaFee.size() - 1).getId() + 1 : 1L;
+            Feedback feedback = new Feedback(id, feedbackDTO.getTexto(), denuncia);
+            feedbackservice.save(feedback);
+            return new ResponseEntity<>("Feedback cadastrado com sucesso", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Denúncia não encontrada", HttpStatus.BAD_REQUEST);
         }
-        else
-        {
-            feedbackservice.save(new Feedback(1L,texto,denunciaservice.getById(denuncia)));
-        }
+    }
 
+
+    @PutMapping("/update-orgao")
+    public ResponseEntity<Object> alterarOrgao(@RequestBody Orgao orgao) {
+        Orgao existingOrgao = orgaoservice.getById(orgao.getId());
+        if (existingOrgao != null) {
+            Orgao updatedOrgao = orgaoservice.save(orgao);
+            return new ResponseEntity<>(updatedOrgao, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Órgão não encontrado", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/update-tipo")
+    public ResponseEntity<Object> alterarTipo(@RequestBody Tipo tipo) {
+        Tipo existingTipo = tiposervice.getById(tipo.getId());
+        if (existingTipo != null) {
+            Tipo updatedTipo = tiposervice.save(tipo);
+            return new ResponseEntity<>(updatedTipo, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Tipo não encontrado", HttpStatus.NOT_FOUND);
+        }
     }
 }

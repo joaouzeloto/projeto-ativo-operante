@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const templateOrgaosCompetentes = document.getElementById('templateOrgaosCompetentes').content;
     const templateTiposProblemas = document.getElementById('templateTiposProblemas').content;
     const templateListarDenuncias = document.getElementById('templateListarDenuncias').content;
+    const templateFeedbackModal = document.getElementById('templateFeedbackModal').content;
+    const templateAlterarModal = document.getElementById('templateAlterarModal').content;
+
+    // Adicionar o template dos modais ao body
+    document.body.appendChild(document.importNode(templateFeedbackModal, true));
+    document.body.appendChild(document.importNode(templateAlterarModal, true));
 
     // Event listeners
     btnOrgaosCompetentes.addEventListener('click', showOrgaosCompetentes);
@@ -31,6 +37,87 @@ document.getElementById('content').addEventListener('submit', function (event) {
         adicionarTipo(tipo);
     }
 });
+
+document.getElementById('feedbackForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const feedback = document.getElementById('feedbackInput').value;
+    const denunciaId = event.target.dataset.denunciaId;  // Obtém o ID da denúncia do dataset do formulário
+    const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+
+    // Enviar o feedback via API
+    fetch('http://localhost:8080/apis/adm/cadastra-feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ texto: feedback, denuncia: denunciaId })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Falha ao enviar feedback');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Trate a resposta da API aqui
+        console.log(data);
+        // Fechar o modal após enviar o feedback
+        const feedbackModal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
+        feedbackModal.hide();
+        // Atualizar a página ou fazer algo após o feedback ser enviado com sucesso
+        alert('Feedback enviado com sucesso!');
+    })
+    .catch(error => {
+        console.error('Erro ao enviar feedback:', error);
+        alert('Erro ao enviar feedback. Por favor, tente novamente.');
+    });
+});
+
+document.getElementById('alterarForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const novoNome = document.getElementById('alterarInput').value;
+    const id = event.target.dataset.id;  // Obtém o ID do dataset do formulário
+    const tipo = event.target.dataset.tipo;  // Obtém o tipo (orgao ou problema) do dataset do formulário
+    const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+
+    console.log(`Alterando ${tipo} com ID ${id} para o novo nome: ${novoNome}`);
+
+    // URL da API com base no tipo
+    const url = tipo === 'orgao' ? 'http://localhost:8080/apis/adm/update-orgao' : 'http://localhost:8080/apis/adm/update-tipo';
+
+    // Enviar o novo nome via API
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ id: id, nome: novoNome })
+    })
+    .then(response => {
+        console.log('Resposta da API recebida:', response);
+        if (!response.ok) {
+            return response.json().then(error => { throw new Error(error.message || 'Falha ao atualizar nome'); });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Dados recebidos da API:', data);
+        // Fechar o modal após atualizar o nome
+        const alterarModal = bootstrap.Modal.getInstance(document.getElementById('alterarModal'));
+        alterarModal.hide();
+        alert('Nome atualizado com sucesso!');
+        // Atualizar a lista após a alteração
+        tipo === 'orgao' ? showOrgaosCompetentes() : showListarTipos();
+    })
+    .catch(error => {
+        console.error('Erro ao atualizar nome:', error);
+        alert('Erro ao atualizar nome. Por favor, tente novamente.');
+    });
+});
+
+
 
 async function adicionarTipo(tipo) {
     try {
@@ -148,6 +235,7 @@ function createTipoTableRow(tipo, index) {
         <td>
             <div style="display: inline-block; vertical-align: middle;">
                 <button onclick="apagarTipo(${tipo.id})">Apagar</button>
+                <button onclick="abrirModalAlterar(${tipo.id}, '${tipo.nome}', 'tipo')" data-bs-toggle="modal" data-bs-target="#alterarModal">Alterar</button>
             </div>
         </td>
     `;
@@ -182,8 +270,8 @@ function createDenunciaTableRow(denuncia, index) {
         <td style="max-width: 30%; overflow: hidden; text-overflow: ellipsis;">${denuncia.texto}</td>
         <td>
             <div style="display: inline-block; vertical-align: middle;">
-                <button  onclick="apagarDenuncia(${denuncia.id})">Apagar</button>
-                <button   onclick="criarFeedback(${index})">Feedback</button>
+                <button onclick="apagarDenuncia(${denuncia.id})">Apagar</button>
+                <button onclick="abrirModalFeedback(${denuncia.id})" data-bs-toggle="modal" data-bs-target="#feedbackModal">Feedback</button>
             </div>
         </td>
     `;
@@ -217,7 +305,8 @@ function createOrgaoTableRow(orgao, index) {
         <td style="max-width: 80%; overflow: hidden; text-overflow: ellipsis;">${orgao.nome}</td>
         <td>
             <div style="display: inline-block; vertical-align: middle;">
-                <button  onclick="apagarOrgao(${orgao.id})">Apagar</button>
+                <button onclick="apagarOrgao(${orgao.id})">Apagar</button>
+                <button onclick="abrirModalAlterar(${orgao.id}, '${orgao.nome}', 'orgao')" data-bs-toggle="modal" data-bs-target="#alterarModal">Alterar</button>
             </div>
         </td>
     `;
@@ -276,7 +365,18 @@ async function apagarOrgao(id) {
     }
 }
 
-function logout(){
+function logout() {
     localStorage.clear("authToken");
     window.location.href = '../../index.html';
+}
+
+function abrirModalFeedback(denunciaId) {
+    document.getElementById('feedbackInput').value = '';  // Limpa o feedback anterior
+    document.getElementById('feedbackForm').dataset.denunciaId = denunciaId;  // Armazena o ID da denúncia no formulário
+}
+
+function abrirModalAlterar(id, nome, tipo) {
+    document.getElementById('alterarInput').value = nome;  // Preenche o campo com o nome atual
+    document.getElementById('alterarForm').dataset.id = id;  // Armazena o ID no formulário
+    document.getElementById('alterarForm').dataset.tipo = tipo;  // Armazena o tipo (orgao ou problema) no formulário
 }
