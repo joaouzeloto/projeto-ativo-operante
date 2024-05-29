@@ -55,7 +55,6 @@
                 </ul>
                 <div class="d-flex align-items-center">
                   <button data-mdb-ripple-init type="button" class="btn px-3 me-2" onclick="logout()">Sair</button>
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal">Feedback</button>
                 </div>
               </div>
             </nav>
@@ -96,7 +95,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="feedbackForm">
+              <form id="feedbackForm" onsubmit="handleFeedbackSubmit(event)">
                 <div class="mb-3">
                   <label for="feedbackInput" class="form-label">Seu Feedback</label>
                   <textarea class="form-control" id="feedbackInput" rows="3" required></textarea>
@@ -119,12 +118,12 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="alterarForm">
+              <form id="alterarForm" onsubmit="handleFormSubmit(event)">
                 <div class="mb-3">
                   <label for="alterarInput" class="form-label">Nome</label>
                   <input type="text" class="form-control" id="alterarInput" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Atualizar</button>
+                <button type="submit" class="btn">Atualizar</button>
               </form>
             </div>
           </div>

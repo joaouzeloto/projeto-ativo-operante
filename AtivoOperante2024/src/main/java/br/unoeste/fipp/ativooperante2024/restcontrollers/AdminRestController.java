@@ -167,12 +167,11 @@ public class AdminRestController {
     }
 
     @PostMapping("/cadastra-feedback")
-    public ResponseEntity<Object> cadastraFeedback(@RequestBody FeedbackDTO feedbackDTO) {
-        Denuncia denuncia = denunciaservice.getById(feedbackDTO.getDenuncia());
+    public ResponseEntity<Object> cadastraFeedback(@RequestParam(value = "texto") String texto,@RequestParam(value = "idDenuncia")Long id) {
+        System.out.println("entrei");
+        Denuncia denuncia = denunciaservice.getById(id);
         if (denuncia != null) {
-            List<Feedback> listaFee = feedbackservice.getAll();
-            Long id = (listaFee != null && !listaFee.isEmpty()) ? listaFee.get(listaFee.size() - 1).getId() + 1 : 1L;
-            Feedback feedback = new Feedback(id, feedbackDTO.getTexto(), denuncia);
+            Feedback feedback = new Feedback(texto, denuncia);
             feedbackservice.save(feedback);
             return new ResponseEntity<>("Feedback cadastrado com sucesso", HttpStatus.OK);
         } else {
@@ -201,5 +200,15 @@ public class AdminRestController {
         } else {
             return new ResponseEntity<>("Tipo não encontrado", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/verifica-feedback-existente")
+    public ResponseEntity<Object> verificaSeExiste(@RequestParam(value = "id") Long id)
+    {
+        Feedback novo = feedbackservice.getByDenunciaId(id);
+        if (novo!=null) {
+            return new ResponseEntity<>("Feedback existente", HttpStatus.BAD_REQUEST);
+        }
+         return new ResponseEntity<>("Feedback nao existente", HttpStatus.OK);
     }
 }
