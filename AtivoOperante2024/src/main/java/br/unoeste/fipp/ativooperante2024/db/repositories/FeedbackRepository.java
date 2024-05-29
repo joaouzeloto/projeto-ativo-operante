@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface FeedbackRepository extends JpaRepository<Feedback,Long>
 {
-    public Feedback findByDenuncia(Denuncia denuncia);
+    public Feedback getFeedbacksByDenuncia(Denuncia denuncia);
 }

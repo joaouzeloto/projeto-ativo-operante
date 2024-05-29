@@ -16,10 +16,9 @@ public class Feedback {
     private Denuncia denuncia;
 
     public Feedback() {
-        this(0L,"",new Denuncia());
+        this("",new Denuncia());
     }
-    public Feedback(Long id, String texto,Denuncia denuncia) {
-        this.id = id;
+    public Feedback( String texto,Denuncia denuncia) {
         this.texto = texto;
         this.denuncia = denuncia;
     }

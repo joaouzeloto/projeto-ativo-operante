@@ -66,7 +66,7 @@ public class AccessRestController
         try {
             // Codificar a senha antes de salvar
             String senhaCodificada = passwordEncoder.encode(String.valueOf(senha));
-            Usuario usuario = new Usuario(cpf, email, senhaCodificada, 0);
+            Usuario usuario = new Usuario(cpf, email, senhaCodificada, 1);
             Usuario novoUsuario = usuarioservice.save(usuario);
             return new ResponseEntity<>(novoUsuario, HttpStatus.OK);
         } catch (Exception e) {

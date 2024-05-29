@@ -48,7 +48,7 @@ public class FeedbackService
     {
         Denuncia aux = denunciaService.getById(id);
         if(aux!=null)
-            return repo.findByDenuncia(aux);
+            return repo.getFeedbacksByDenuncia(aux);
         return null;
     }
 }

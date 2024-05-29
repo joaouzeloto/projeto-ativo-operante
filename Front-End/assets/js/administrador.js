@@ -3,23 +3,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnTiposProblemas = document.getElementById('btnTiposProblemas');
     const btnListarDenuncias = document.getElementById('btnListarDenuncias');
 
-    // Templates
+    
     const templateOrgaosCompetentes = document.getElementById('templateOrgaosCompetentes').content;
     const templateTiposProblemas = document.getElementById('templateTiposProblemas').content;
     const templateListarDenuncias = document.getElementById('templateListarDenuncias').content;
     const templateFeedbackModal = document.getElementById('templateFeedbackModal').content;
     const templateAlterarModal = document.getElementById('templateAlterarModal').content;
 
-    // Adicionar o template dos modais ao body
+    
     document.body.appendChild(document.importNode(templateFeedbackModal, true));
     document.body.appendChild(document.importNode(templateAlterarModal, true));
 
-    // Event listeners
+    
     btnOrgaosCompetentes.addEventListener('click', showOrgaosCompetentes);
     btnTiposProblemas.addEventListener('click', showListarTipos);
     btnListarDenuncias.addEventListener('click', showListarDenuncias);
 
-    // Initial display
+    
     showListarDenuncias();
 });
 
@@ -38,55 +38,88 @@ document.getElementById('content').addEventListener('submit', function (event) {
     }
 });
 
-document.getElementById('feedbackForm').addEventListener('submit', function (event) {
+async function existeFeedback(id) {
+    const token = localStorage.getItem('authToken');
+    const idNovo = id;
+    try {
+        const response = await fetch(`http://localhost:8080/apis/adm/verifica-feedback-existente?id=${idNovo}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.status === 400) {
+            // Bad Request: Feedback existe
+            return 0;
+        } else if (response.status === 200) {
+            // OK: Feedback não existe
+            return 1;
+        } else {
+            // Outro status de resposta, tratar conforme necessário
+            throw new Error(`Erro ao verificar feedback. Status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Erro ao verificar feedback:', error);
+        return 0;
+    }
+}
+
+
+
+async function handleFeedbackSubmit(event) {
     event.preventDefault();
     const feedback = document.getElementById('feedbackInput').value;
-    const denunciaId = event.target.dataset.denunciaId;  // Obtém o ID da denúncia do dataset do formulário
-    const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
-
-    // Enviar o feedback via API
-    fetch('http://localhost:8080/apis/adm/cadastra-feedback', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ texto: feedback, denuncia: denunciaId })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Falha ao enviar feedback');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Trate a resposta da API aqui
-        console.log(data);
-        // Fechar o modal após enviar o feedback
+    const denunciaId = event.target.dataset.denunciaId;  
+    const token = localStorage.getItem('authToken');  
+    const boo = await existeFeedback(denunciaId);
+    
+    if(boo === 1){
+        fetch('http://localhost:8080/apis/adm/cadastra-feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Bearer ${token}`
+            },
+            body: new URLSearchParams({ "texto": feedback, "idDenuncia": denunciaId })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Falha ao enviar feedback');
+            }
+            
+        })
+        .then(data => {
+            console.log(data);
+            const feedbackModal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
+            feedbackModal.hide();
+            alert('Feedback enviado com sucesso!');
+        })
+        .catch(error => {
+            console.error('Erro ao enviar feedback:', error);
+            alert('Erro ao enviar feedback. Por favor, tente novamente.');
+        });
+    } else {
+        alert("Feedback já foi feito");
         const feedbackModal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
         feedbackModal.hide();
-        // Atualizar a página ou fazer algo após o feedback ser enviado com sucesso
-        alert('Feedback enviado com sucesso!');
-    })
-    .catch(error => {
-        console.error('Erro ao enviar feedback:', error);
-        alert('Erro ao enviar feedback. Por favor, tente novamente.');
-    });
-});
+    }
+}
 
-document.getElementById('alterarForm').addEventListener('submit', function (event) {
+
+
+function handleFormSubmit(event) {
     event.preventDefault();
     const novoNome = document.getElementById('alterarInput').value;
-    const id = event.target.dataset.id;  // Obtém o ID do dataset do formulário
-    const tipo = event.target.dataset.tipo;  // Obtém o tipo (orgao ou problema) do dataset do formulário
-    const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+    const id = event.target.dataset.id;  
+    const tipo = event.target.dataset.tipo;  
+    const token = localStorage.getItem('authToken');  
 
     console.log(`Alterando ${tipo} com ID ${id} para o novo nome: ${novoNome}`);
 
-    // URL da API com base no tipo
+    
     const url = tipo === 'orgao' ? 'http://localhost:8080/apis/adm/update-orgao' : 'http://localhost:8080/apis/adm/update-tipo';
 
-    // Enviar o novo nome via API
+    
     fetch(url, {
         method: 'PUT',
         headers: {
@@ -104,24 +137,22 @@ document.getElementById('alterarForm').addEventListener('submit', function (even
     })
     .then(data => {
         console.log('Dados recebidos da API:', data);
-        // Fechar o modal após atualizar o nome
+        
         const alterarModal = bootstrap.Modal.getInstance(document.getElementById('alterarModal'));
         alterarModal.hide();
         alert('Nome atualizado com sucesso!');
-        // Atualizar a lista após a alteração
+       
         tipo === 'orgao' ? showOrgaosCompetentes() : showListarTipos();
     })
     .catch(error => {
         console.error('Erro ao atualizar nome:', error);
         alert('Erro ao atualizar nome. Por favor, tente novamente.');
     });
-});
-
-
+}
 
 async function adicionarTipo(tipo) {
     try {
-        const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+        const token = localStorage.getItem('authToken');  
         const response = await fetch('http://localhost:8080/apis/adm/add-tipo', {
             method: 'POST',
             headers: {
@@ -133,7 +164,7 @@ async function adicionarTipo(tipo) {
         if (!response.ok) throw new Error('Falha ao adicionar tipo');
         const novoTipo = await response.json();
         console.log('Tipo adicionado com sucesso:', novoTipo);
-        showListarTipos();  // Atualiza a lista de tipos
+        showListarTipos();  
     } catch (error) {
         console.error('Erro ao adicionar tipo:', error);
     }
@@ -141,7 +172,7 @@ async function adicionarTipo(tipo) {
 
 async function adicionarOrgao(orgao) {
     try {
-        const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+        const token = localStorage.getItem('authToken');  
         const response = await fetch('http://localhost:8080/apis/adm/add-orgao', {
             method: 'POST',
             headers: {
@@ -153,7 +184,7 @@ async function adicionarOrgao(orgao) {
         if (!response.ok) throw new Error('Falha ao adicionar órgão');
         const novoOrgao = await response.json();
         console.log('Órgão adicionado com sucesso:', novoOrgao);
-        showOrgaosCompetentes();  // Atualiza a lista de órgãos
+        showOrgaosCompetentes();  
     } catch (error) {
         console.error('Erro ao adicionar órgão:', error);
     }
@@ -161,7 +192,7 @@ async function adicionarOrgao(orgao) {
 
 async function carregarDenuncias() {
     try {
-        const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+        const token = localStorage.getItem('authToken');  
         const response = await fetch('http://localhost:8080/apis/adm/get-all-denuncias', {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -177,7 +208,7 @@ async function carregarDenuncias() {
 
 async function carregarTipos() {
     try {
-        const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+        const token = localStorage.getItem('authToken');  
         const response = await fetch('http://localhost:8080/apis/adm/get-all-tipos', {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -193,7 +224,7 @@ async function carregarTipos() {
 
 async function carregarOrgaos() {
     try {
-        const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+        const token = localStorage.getItem('authToken');  
         const response = await fetch('http://localhost:8080/apis/adm/get-all-orgaos', {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -325,7 +356,7 @@ async function apagarTipo(id) {
         });
         if (!response.ok) throw new Error('Falha ao apagar tipo');
         console.log('Tipo apagado com sucesso');
-        showListarTipos();  // Atualiza a lista de tipos
+        showListarTipos();  
     } catch (error) {
         console.error('Erro ao apagar tipo:', error);
     }
@@ -342,7 +373,7 @@ async function apagarDenuncia(id) {
         });
         if (!response.ok) throw new Error('Falha ao apagar denúncia');
         console.log('Denúncia apagada com sucesso');
-        showListarDenuncias();  // Atualiza a lista de denúncias
+        showListarDenuncias();  
     } catch (error) {
         console.error('Erro ao apagar denúncia:', error);
     }
@@ -359,7 +390,7 @@ async function apagarOrgao(id) {
         });
         if (!response.ok) throw new Error('Falha ao apagar órgão');
         console.log('Órgão apagado com sucesso');
-        showOrgaosCompetentes();  // Atualiza a lista de órgãos
+        showOrgaosCompetentes();  
     } catch (error) {
         console.error('Erro ao apagar órgão:', error);
     }
@@ -371,12 +402,12 @@ function logout() {
 }
 
 function abrirModalFeedback(denunciaId) {
-    document.getElementById('feedbackInput').value = '';  // Limpa o feedback anterior
-    document.getElementById('feedbackForm').dataset.denunciaId = denunciaId;  // Armazena o ID da denúncia no formulário
+    document.getElementById('feedbackInput').value = '';  
+    document.getElementById('feedbackForm').dataset.denunciaId = denunciaId;  
 }
 
 function abrirModalAlterar(id, nome, tipo) {
-    document.getElementById('alterarInput').value = nome;  // Preenche o campo com o nome atual
-    document.getElementById('alterarForm').dataset.id = id;  // Armazena o ID no formulário
-    document.getElementById('alterarForm').dataset.tipo = tipo;  // Armazena o tipo (orgao ou problema) no formulário
+    document.getElementById('alterarInput').value = nome;  
+    document.getElementById('alterarForm').dataset.id = id;  
+    document.getElementById('alterarForm').dataset.tipo = tipo;  
 }

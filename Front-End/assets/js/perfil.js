@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     async function fetchFeedback(denunciaId) {
         try {
-            const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+            const token = localStorage.getItem('authToken');  
             const response = await fetch(`http://localhost:8080/apis/cidadao/get-feedback-by-denuncia-id?id=${denunciaId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -67,13 +67,13 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             if (response.ok) {
                 const data = await response.json();
-                return data.texto || "Nenhum feedback cadastrado.";  // Se não tiver texto, mostra mensagem padrão.
+                return data.texto || "Nenhum feedback cadastrado.";  
             } else {
-                return " "; // Mensagem de erro para problemas de resposta.
+                return " "; 
             }
         } catch (error) {
             console.error('Erro na rede ou ao buscar feedback:', error);
-            return " "; // Mensagem de erro para exceções de rede ou outras.
+            return " "; 
         }
     }
     
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       async function carregarDenuncias() {
         try {
-            const token = localStorage.getItem('authToken');  // Obtém o token do localStorage
+            const token = localStorage.getItem('authToken');  
             const response = await fetch(`http://localhost:8080/apis/cidadao/get-all-denuncia-cidadao?id=${localStorage.getItem('id')}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             const token = localStorage.getItem('authToken');
     
-            // Debugging FormData
+           
             for (let [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
             }
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
 
-    // Inicialização
+    
     btnEnviarDenuncia.addEventListener('click', showEnviarDenuncia);
     btnVisualizarDenuncias.addEventListener('click', showVisualizarDenuncias);
     showVisualizarDenuncias();
