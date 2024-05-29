@@ -21,6 +21,7 @@ public class Feedback {
     public Feedback(Long id, String texto,Denuncia denuncia) {
         this.id = id;
         this.texto = texto;
+        this.denuncia = denuncia;
     }
 
     public Long getId() {
@@ -37,5 +38,13 @@ public class Feedback {
 
     public void setTexto(String texto) {
         this.texto = texto;
+    }
+
+    public Denuncia getDenuncia() {
+        return denuncia;
+    }
+
+    public void setDenuncia(Denuncia denuncia) {
+        this.denuncia = denuncia;
     }
 }

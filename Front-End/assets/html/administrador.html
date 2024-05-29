@@ -54,8 +54,8 @@
                   <li><a>Seja a diferença!</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
-                  <button data-mdb-ripple-init type="button" class="btn px-3 me-2"
-                    onclick="logout()">Sair</button>
+                  <button data-mdb-ripple-init type="button" class="btn px-3 me-2" onclick="logout()">Sair</button>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal">Feedback</button>
                 </div>
               </div>
             </nav>
@@ -85,6 +85,53 @@
         <!-- O conteúdo dinâmico será carregado aqui -->
       </div>
     </section>
+
+    <!-- Template para o Modal de Feedback -->
+    <template id="templateFeedbackModal">
+      <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="feedbackModalLabel">Enviar Feedback</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="feedbackForm">
+                <div class="mb-3">
+                  <label for="feedbackInput" class="form-label">Seu Feedback</label>
+                  <textarea class="form-control" id="feedbackInput" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Template para o Modal de Alteração -->
+    <template id="templateAlterarModal">
+      <div class="modal fade" id="alterarModal" tabindex="-1" aria-labelledby="alterarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="alterarModalLabel">Alterar Nome</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="alterarForm">
+                <div class="mb-3">
+                  <label for="alterarInput" class="form-label">Nome</label>
+                  <input type="text" class="form-control" id="alterarInput" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
     <template id="templateOrgaosCompetentes">
       <div class="col-lg-8">
         <div class="card">
@@ -103,6 +150,7 @@
                   <tr>
                     <th style="width: 20%; max-width: 20%; overflow: hidden; text-overflow: ellipsis;">ID</th>
                     <th style="width: 80%; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">Nome do Órgão</th>
+                    <th style="width: 80%; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">Ações</th>
                   </tr>
                 </thead>
                 <tbody id="listaOrgaos">
@@ -114,7 +162,7 @@
         </div>
       </div>
     </template>
-    
+
     <template id="templateTiposProblemas">
       <div class="col-lg-8">
         <div class="card">
@@ -133,6 +181,7 @@
                   <tr>
                     <th style="width: 20%; max-width: 20%; overflow: hidden; text-overflow: ellipsis;">ID</th>
                     <th style="width: 80%; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">Nome do Tipo de Problema</th>
+                    <th style="width: 80%; max-width: 80%; overflow: hidden; text-overflow: ellipsis;">Ações</th>
                   </tr>
                 </thead>
                 <tbody id="listaTiposProblemas">
@@ -144,6 +193,7 @@
         </div>
       </div>
     </template>
+
     <template id="templateListarDenuncias">
       <div class="col-lg-8">
         <div class="card">
@@ -156,6 +206,7 @@
                     <th style="width: 20%; max-width: 20%; overflow: hidden; text-overflow: ellipsis;">ID</th>
                     <th style="width: 30%; max-width: 30%; overflow: hidden; text-overflow: ellipsis;">Título</th>
                     <th style="width: 30%; max-width: 30%; overflow: hidden; text-overflow: ellipsis;">Descrição</th>
+                    <th style="width: 20%; max-width: 20%; overflow: hidden; text-overflow: ellipsis;">Ações</th>
                   </tr>
                 </thead>
                 <tbody id="listaDenuncias">
@@ -166,8 +217,9 @@
           </div>
         </div>
       </div>
-    </template>    
+    </template>
   </main>
+
   <footer class="footer-area black-bg">
     <div class="container">
       <div class="footer__logo-wrap">
@@ -204,8 +256,6 @@
   <script src="../js/wow.min.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/administrador.js"></script>
-
 </body>
 
 </html>
-
